@@ -45,3 +45,8 @@ Yet another jQuery plugin that creates and launches a modal.
 		
 		modal.show();
 	});
+
+
+## Notes
+
+This plugin uses [JavaScript 1.8.5's native `bind` method](https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Function/bind). Internet Explorer 8 and older lack the method and require the [polyfill outlined in the Compatibility section](https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Function/bind#Compatibility) of the MDN documentation.
