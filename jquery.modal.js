@@ -8,11 +8,15 @@
 
 ;(function( $, window, document, undefined ) {
 	
+	var m;
+	
 	var Modal = function( markup, options ) {
-		this.$markup = $( markup );
-		this.options = options;
+		m = this;
 		
-		this.init();
+		m.$markup = $( markup );
+		m.options = options;
+		
+		m.init();
 	};
 	
 	Modal.prototype = {
@@ -31,32 +35,32 @@
 		},
 		
 		init: function() {
-			this.config = $.extend( {}, this.defaults, this.options );
+			m.config = $.extend( {}, m.defaults, m.options );
 			
-			this.$body = $( 'body' );
-			this.$closeButton = $( '<button class="' + this.config.classes.closeButton + '" type="button">Close</button>' );
-			this.$curtain = $( '<div class="' + this.config.classes.curtain + '" />' );
-			this.$elem = $( '<div class="' + this.config.classes.contentWrapper + '" />' );
-			this.$window = $( 'window' );
+			m.$body = $( 'body' );
+			m.$closeButton = $( '<button class="' + m.config.classes.closeButton + '" type="button">Close</button>' );
+			m.$curtain = $( '<div class="' + m.config.classes.curtain + '" />' );
+			m.$elem = $( '<div class="' + m.config.classes.contentWrapper + '" />' );
+			m.$window = $( window );
 			
-			this.$elem.append( this.$markup.clone( true ), this.$closeButton );
+			m.$elem.append( m.$markup.clone( true ), m.$closeButton );
 			
-			this.events.bind();
+			m.events.bind();
 			
-			return this;
+			return m;
 		},
 		
 		events: {
 			bind: function() {
-				this.$closeButton.add( this.$curtain ).on( 'click.modal', this.handlers.click );
+				m.$closeButton.add( m.$curtain ).on( 'click.modal', m.handlers.click );
 				
-				this.$window.on( 'keyup.modal', this.handlers.keyup );
+				m.$window.on( 'keyup.modal', m.handlers.keyup );
 			},
 			
 			unbind: function() {
-				this.$closeButton.add( this.$curtain ).off( 'click.modal' );
+				m.$closeButton.add( m.$curtain ).off( 'click.modal' );
 				
-				this.$window.off( 'keyup.modal' );
+				m.$window.off( 'keyup.modal' );
 			}
 		},
 		
@@ -64,42 +68,42 @@
 			click: function( event ) {
 				event.preventDefault();
 				
-				this.hide();
+				m.hide();
 			},
 			
 			keyup: function( event ) {
 				event.preventDefault();
 				
 				if ( event.which == 27 ) {
-					this.hide();
+					m.hide();
 				}
 			}
 		},
 		
 		hide: function() {
-			this.$curtain.add( this.$elem ).removeClass( this.config.classes.loaded );
+			m.$curtain.add( m.$elem ).removeClass( m.config.classes.loaded );
 			
-			var timeout = setTimeout( $.proxy( function() {
-				this.handlers.unbind();
+			var timeout = setTimeout( function() {
+				m.events.unbind();
 				
-				this.$curtain.add( this.$elem ).remove();
+				m.$curtain.add( m.$elem ).remove();
 				
-				if ( typeof this.config.callbacks.post == 'function' ) {
-					this.config.callbacks.post();
+				if ( typeof m.config.callbacks.post == 'function' ) {
+					m.config.callbacks.post();
 				}
-			}, this ), this.config.animationDuration );
+			}, m.config.animationDuration );
 		},
 		
 		show: function() {
-			if ( typeof this.config.callbacks.pre == 'function' ) {
-				this.config.callbacks.pre();
+			m.$body.append( m.$curtain, m.$elem );
+			
+			if ( typeof m.config.callbacks.pre == 'function' ) {
+				m.config.callbacks.pre();
 			}
 			
-			this.$body.append( this.$curtain, this.$elem );
+			m.$elem.css( 'top', m.$window.scrollTop() + Math.floor( ( m.$window.outerHeight() - m.$elem.outerHeight() ) / 2 ) );
 			
-			this.$elem.css( 'top', this.$window.scrollTop() + Math.floor( ( this.$window.outerHeight() - this.$elem.outerHeight() ) / 2 ) );
-			
-			this.$curtain.add( this.$elem ).addClass( this.config.classes.loaded );
+			m.$curtain.add( m.$elem ).addClass( m.config.classes.loaded );
 		}
 	};
 	

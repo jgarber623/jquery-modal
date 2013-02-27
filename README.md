@@ -38,7 +38,9 @@ Yet another jQuery plugin that creates and launches a modal.
 			}
 		}
 	
-	$( '#sample-modal-anchor' ).on( 'click', function() {
+	$( '#sample-modal-anchor' ).on( 'click', function( event ) {
+		event.preventDefault();
+		
 		var modal = new Modal( markup, options );
 		
 		modal.show();
