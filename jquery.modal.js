@@ -45,19 +45,19 @@
 
 			m.$elem.append( m.$markup, m.$closeButton );
 
-			m.events.bind();
+			m.events.attach();
 
 			return m;
 		},
 
 		events: {
-			bind: function() {
+			attach: function() {
 				m.$closeButton.add( m.$curtain ).on( 'click.modal', m.handlers.click );
 
 				m.$window.on( 'keyup.modal', m.handlers.keyup );
 			},
 
-			unbind: function() {
+			detach: function() {
 				m.$closeButton.add( m.$curtain ).off( 'click.modal' );
 
 				m.$window.off( 'keyup.modal' );
@@ -84,7 +84,7 @@
 			m.$curtain.add( m.$elem ).removeClass( m.config.classes.loaded );
 
 			var timeout = setTimeout( function() {
-				m.events.unbind();
+				m.events.detach();
 
 				m.$curtain.add( m.$elem ).remove();
 
