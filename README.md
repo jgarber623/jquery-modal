@@ -36,7 +36,7 @@ Yet another jQuery plugin that creates and launches a modal.
 				curtain: 'modal-curtain',
 				loaded: 'modal-loaded'
 			}
-		}
+		};
 	
 	$( '#sample-modal-anchor' ).on( 'click', function( event ) {
 		event.preventDefault();
