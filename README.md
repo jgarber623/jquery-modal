@@ -19,7 +19,7 @@ Yet another jQuery plugin that creates and launches a modal.
 
 ### JavaScript
 
-	var markup = $( '#sample-modal' ),
+	var $markup = $( '#sample-modal' ).clone( true ),
 		options = {
 			animationDuration: 250,
 			callbacks: {
@@ -41,7 +41,7 @@ Yet another jQuery plugin that creates and launches a modal.
 	$( '#sample-modal-anchor' ).on( 'click', function( event ) {
 		event.preventDefault();
 		
-		var modal = new Modal( markup, options );
+		var modal = new Modal( $markup, options );
 		
 		modal.show();
 	});

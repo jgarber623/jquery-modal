@@ -43,7 +43,7 @@
 			m.$elem = $( '<div class="' + m.config.classes.contentWrapper + '" />' );
 			m.$window = $( window );
 
-			m.$elem.append( m.$markup.clone( true ), m.$closeButton );
+			m.$elem.append( m.$markup, m.$closeButton );
 
 			m.events.bind();
 

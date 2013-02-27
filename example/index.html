@@ -71,7 +71,7 @@
 	<script src="../jquery.modal.js"></script>
 	
 	<script type="text/javascript">
-		var markup = $( '#sample-modal' ),
+		var $markup = $( '#sample-modal' ).clone( true ),
 			options = {
 				animationDuration: 250,
 				callbacks: {
@@ -93,7 +93,7 @@
 		$( '#sample-modal-anchor' ).on( 'click', function( event ) {
 			event.preventDefault();
 			
-			var modal = new Modal( markup, options );
+			var modal = new Modal( $markup, options );
 			
 			modal.show();
 		});
